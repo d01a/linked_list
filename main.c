@@ -8,8 +8,9 @@ struct node *next;
 
 void insert_node(int);
 void insert_beginning(int);
-void delete_beginning();
 void delete_node(int);
+void delete_beginning();
+void delete_end();
 void print_list();
 void count_list();
 
@@ -53,6 +54,11 @@ int main()
     delete_beginning();
     count_list();
     print_list();
+    puts("******************************************");
+    puts("deleting the last node");
+    delete_end();
+    count_list();
+    print_list();
     return 0;
 }
 
@@ -60,7 +66,7 @@ int main()
 void insert_node(int value){
 Node *newNode , *last;
 newNode=(Node *)malloc(sizeof(Node));
-newNode->data=value;
+newNode->data = value;
 if (head == NULL){
     head = newNode;
     newNode->next = NULL;
@@ -70,20 +76,20 @@ else {
     while(last->next !=NULL){
         last = last->next;
     }
-    last->next=newNode;
-    newNode->next=NULL;
+    last->next = newNode;
+    newNode->next = NULL;
 }
 }
 
 
 void print_list(){
-Node *currentNode=NULL;
-if (head==NULL){
+Node *currentNode = NULL;
+if (head == NULL){
     printf("the linked list is empty\n");
 }
 else{
-currentNode=head;
-while(currentNode !=NULL){
+currentNode = head;
+while(currentNode != NULL){
    printf("%d \n",currentNode->data);
     currentNode=currentNode->next;
 }
@@ -96,15 +102,15 @@ Node *current, *previous;
 current = head;
 previous = head;
 
-int no_value=1;
-while(current->next != NULL){
+int no_value = 1;
+while(current != NULL){
     if (current->data == value){
-     no_value=0;
+     no_value = 0;
      break;
     }
-    current=current->next;
+    current = current->next;
 }
-if (no_value==1){
+if (no_value == 1){
     printf("the list is not containing the value: %d\n",value);
     return;
 }
@@ -116,7 +122,7 @@ if (current->data == value){
     free(current);
     return;
 }
-while(current->data !=value){
+while(current->data != value){
     previous = current;
     current = current->next;
 }
@@ -126,14 +132,14 @@ printf("the value %d deleted from the list\n",value);
 }
 
 void insert_beginning(int value){
-Node *new_node=(Node *)malloc(sizeof(Node *));
-new_node->data=value;
-new_node->next=head;
+Node *new_node = (Node *)malloc(sizeof(Node *));
+new_node->data = value;
+new_node->next = head;
 head=new_node;
 }
 
 void delete_beginning(){
-    if (head==NULL){
+    if (head == NULL){
         printf("the linked list is empty.\n");
     }
     else {
@@ -147,14 +153,35 @@ void delete_beginning(){
 
 void count_list(){
 int count=0;
-if (head==NULL){
+if (head == NULL){
     printf("the linked list is empty\n");
 }
-Node *ptr=NULL;
+Node *ptr = NULL;
 ptr=head;
-while(ptr !=NULL){
+while(ptr != NULL){
     count++;
     ptr=ptr->next;
 }
 printf("the linked list have %d element\n",count);
+}
+
+
+void delete_end(){
+if (head == NULL){
+    puts("the linked list is empty ");
+}
+
+else if (head->next == NULL){
+    free(head);
+    head = NULL;
+}
+
+else {
+    Node *ptr = head;
+    while (ptr->next->next != NULL){
+       ptr = ptr->next;
+    }
+    free(ptr->next);
+    ptr->next = NULL;
+}
 }
