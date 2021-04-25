@@ -7,10 +7,13 @@ struct node *next;
 }Node;
 
 void insert_node(int);
-void print_list();
-void delete_node(int);
 void insert_beginning(int);
 void delete_beginning();
+void delete_node(int);
+void print_list();
+void count_list();
+
+
 
 Node *head=NULL;
 
@@ -27,23 +30,28 @@ int main()
         insert_node(input);
         i++;
     }
+
+    count_list();
     print_list();
-    //deleting test
+    //deleting node from the list
     printf("enter the value to be deleted from the list: ");
     scanf("%d",&value_to_delete);
     delete_node(value_to_delete);
+    count_list();
     print_list();
-    //insert in the beginning test
+    //insert in the beginning
     puts("******************************************");
     int begin_var;
     printf("enter the value to add in the beginning: ");
     scanf("%d",&begin_var);
     insert_beginning(begin_var);
+    count_list();
     print_list();
-    //delete from the beginning test
+    //delete from the beginning
     puts("******************************************");
     puts("deleting the first node");
     delete_beginning();
+    count_list();
     print_list();
     return 0;
 }
@@ -134,4 +142,19 @@ void delete_beginning(){
         free(first_node);
     }
 
+}
+
+
+void count_list(){
+int count=0;
+if (head==NULL){
+    printf("the linked list is empty\n");
+}
+Node *ptr=NULL;
+ptr=head;
+while(ptr !=NULL){
+    count++;
+    ptr=ptr->next;
+}
+printf("the linked list have %d element\n",count);
 }
