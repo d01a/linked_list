@@ -9,7 +9,8 @@ struct node *next;
 void insert_node(int);
 void print_list();
 void delete_node(int);
-
+void insert_beginning(int);
+void delete_beginning();
 
 Node *head=NULL;
 
@@ -17,9 +18,9 @@ int main()
 {
   int value_to_delete;
     print_list();
-
+//inserting random values to the linked list to test
      int i=0;
-    while( i<=5){
+    while( i<5){
         int input;
         printf("enter the value: ");
         scanf("%d",&input);
@@ -27,13 +28,26 @@ int main()
         i++;
     }
     print_list();
+    //deleting test
     printf("enter the value to be deleted from the list: ");
-    scanf("%d ",&value_to_delete);
+    scanf("%d",&value_to_delete);
     delete_node(value_to_delete);
     print_list();
-
+    //insert in the beginning test
+    puts("******************************************");
+    int begin_var;
+    printf("enter the value to add in the beginning: ");
+    scanf("%d",&begin_var);
+    insert_beginning(begin_var);
+    print_list();
+    //delete from the beginning test
+    puts("******************************************");
+    puts("deleting the first node");
+    delete_beginning();
+    print_list();
     return 0;
 }
+
 
 void insert_node(int value){
 Node *newNode , *last;
@@ -51,8 +65,8 @@ else {
     last->next=newNode;
     newNode->next=NULL;
 }
-
 }
+
 
 void print_list(){
 Node *currentNode=NULL;
@@ -68,6 +82,7 @@ while(currentNode !=NULL){
 }
 }
 
+
 void delete_node(int value){
 Node *current, *previous;
 current = head;
@@ -82,7 +97,7 @@ while(current->next != NULL){
     current=current->next;
 }
 if (no_value==1){
-    printf("the list is not containing the value: %d",value);
+    printf("the list is not containing the value: %d\n",value);
     return;
 }
 current = head;
@@ -100,4 +115,23 @@ while(current->data !=value){
 previous->next = current->next;
 free(current);
 printf("the value %d deleted from the list\n",value);
+}
+
+void insert_beginning(int value){
+Node *new_node=(Node *)malloc(sizeof(Node *));
+new_node->data=value;
+new_node->next=head;
+head=new_node;
+}
+
+void delete_beginning(){
+    if (head==NULL){
+        printf("the linked list is empty.\n");
+    }
+    else {
+        Node *first_node = head;
+        head = first_node->next;
+        free(first_node);
+    }
+
 }
