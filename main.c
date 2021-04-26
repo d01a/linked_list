@@ -2,32 +2,32 @@
 #include <stdlib.h>
 
 typedef struct node{
-int data;
+char data[50];
 struct node *next;
 }Node;
 
-void insert_node(int);
-void insert_beginning(int);
-void delete_node(int);
+void insert_node(char *);
+void insert_beginning(char*);
+void delete_node(char*);
 void delete_beginning();
 void delete_end();
 void print_list();
 void count_list();
-
+void sortlist();
 
 
 Node *head=NULL;
-
+Node *ptr=NULL;
 int main()
 {
-  int value_to_delete;
+  char value_to_delete[50];
     print_list();
 //inserting random values to the linked list to test
      int i=0;
     while( i<5){
-        int input;
+        char input[50];
         printf("enter the value: ");
-        scanf("%d",&input);
+        scanf("\n%[^\n]s",input);
         insert_node(input);
         i++;
     }
@@ -35,16 +35,16 @@ int main()
     count_list();
     print_list();
     //deleting node from the list
-    printf("enter the value to be deleted from the list: ");
-    scanf("%d",&value_to_delete);
+  /*  printf("enter the value to be deleted from the list: ");
+    scanf("\n%[^\n]s",value_to_delete);
     delete_node(value_to_delete);
     count_list();
     print_list();
     //insert in the beginning
     puts("******************************************");
-    int begin_var;
+    char begin_var[50];
     printf("enter the value to add in the beginning: ");
-    scanf("%d",&begin_var);
+    scanf("\n%[^\n]s",begin_var);
     insert_beginning(begin_var);
     count_list();
     print_list();
@@ -59,14 +59,19 @@ int main()
     delete_end();
     count_list();
     print_list();
+    */
+    puts("******************************************");
+    puts("sorting the list");
+    sort();
+    print_list();
     return 0;
 }
 
 
-void insert_node(int value){
+void insert_node(char *value){
 Node *newNode , *last;
 newNode=(Node *)malloc(sizeof(Node));
-newNode->data = value;
+strcpy(newNode->data ,value);
 if (head == NULL){
     head = newNode;
     newNode->next = NULL;
@@ -90,50 +95,50 @@ if (head == NULL){
 else{
 currentNode = head;
 while(currentNode != NULL){
-   printf("%d \n",currentNode->data);
+   printf("%s \n",currentNode->data);
     currentNode=currentNode->next;
 }
 }
 }
 
 
-void delete_node(int value){
+void delete_node(char *value){
 Node *current, *previous;
 current = head;
 previous = head;
 
 int no_value = 1;
 while(current != NULL){
-    if (current->data == value){
+    if (strcmp(current->data , value) ==0){
      no_value = 0;
      break;
     }
     current = current->next;
 }
 if (no_value == 1){
-    printf("the list is not containing the value: %d\n",value);
+    printf("the list is not containing the value: %s\n",value);
     return;
 }
 current = head;
 previous = head;
 
-if (current->data == value){
+if (strcmp(current->data , value) ==0){
     head = current->next;
     free(current);
     return;
 }
-while(current->data != value){
+while( strcmp(current->data , value)!=0){
     previous = current;
     current = current->next;
 }
 previous->next = current->next;
 free(current);
-printf("the value %d deleted from the list\n",value);
+printf("the value %s deleted from the list\n",value);
 }
 
-void insert_beginning(int value){
+void insert_beginning(char *value){
 Node *new_node = (Node *)malloc(sizeof(Node *));
-new_node->data = value;
+strcpy(new_node->data , value);
 new_node->next = head;
 head=new_node;
 }
@@ -185,3 +190,26 @@ else {
     ptr->next = NULL;
 }
 }
+
+void sort(void)
+    {
+     int strcmp(char [],char []);
+     int i;
+     char temp[20],s1[20],s2[20];
+     Node *ptr2;
+     for(ptr=head;ptr!=NULL;ptr=ptr->next)
+       {
+     for(ptr2=ptr->next;ptr2!=NULL;ptr2=ptr2->next)
+       {
+     strcpy(s1,ptr->data);
+     strcpy(s2,ptr2->data);
+     i=strcmp(s1,s2);
+     if(i==1)
+       {
+    strcpy(temp,ptr->data);
+    strcpy(ptr->data,ptr2->data);
+    strcpy(ptr2->data,temp);
+    }
+    }
+      }
+     }
